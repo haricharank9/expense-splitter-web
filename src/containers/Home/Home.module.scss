@@ -1,0 +1,10 @@
+.Button_Container {
+    position: relative;
+    height: 4rem;
+
+    .Floating_Button {
+        position: absolute !important;
+        top: 0.5rem !important;
+        right: 0.5rem !important;
+    }
+}

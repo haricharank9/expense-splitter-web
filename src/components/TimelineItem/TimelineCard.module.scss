@@ -1,0 +1,6 @@
+.Root {
+    &::before {
+        flex: none !important;
+        padding: 0 !important;
+    }
+}

@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import LoaderIndicator from "./components/LoaderIndicator/LoaderIndicator";
+import ErrorHandler from "./hoc/ErrorHandler/ErrorHandler";
+import AppRouting from "./router/AppRouting/AppRouting";
+import store from "./store/store";
+import theme from "./utils/theming";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <LoaderIndicator />
+          <ErrorHandler>
+            <AppRouting />
+          </ErrorHandler>
+        </MuiThemeProvider>
+      </Provider>
+    </BrowserRouter>
   );
 }
 

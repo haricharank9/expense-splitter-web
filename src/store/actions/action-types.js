@@ -1,0 +1,5 @@
+export const SET_IS_LOADING = "SET_IS_LOADING";
+export const PUSH_REQUEST = "PUSH_REQUEST";
+export const REMOVE_REQUEST = "REMOVE_REQUEST";
+export const NOTIFY_LOADER = "NOTIFY_LOADER";
+export const LOGIN_USER = "LOGIN_USER";
