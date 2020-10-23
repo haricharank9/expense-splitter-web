@@ -1,11 +1,15 @@
+import { Button, Grid, InputAdornment } from "@material-ui/core";
+import { AlternateEmail } from "@material-ui/icons";
+import { Field, Form, Formik } from "formik";
+import { TextField } from "formik-material-ui";
 import React from "react";
 
 const ExpenseForm = ({ submitForm }) => (
   <Formik
-    initialValues={initialValues}
-    validationSchema={validationSchema}
-    onSubmit={submitForm}
-    initialErrors={initialValues}
+  // initialValues={initialValues}
+  // validationSchema={validationSchema}
+  // onSubmit={submitForm}
+  // initialErrors={initialValues}
   >
     {({ isSubmitting, isValid }) => (
       <Form>
@@ -33,7 +37,6 @@ const ExpenseForm = ({ submitForm }) => (
             variant="outlined"
             className="Text_Field"
           />
-          <PasswordEntry name="password" />
         </Grid>
         <Grid
           container

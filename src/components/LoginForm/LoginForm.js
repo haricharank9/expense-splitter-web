@@ -8,7 +8,7 @@ import { object, string } from "yup";
 import FormikBase from "../FormikBase/FormikBase";
 import PasswordEntry from "../PasswordEntry/PasswordEntry";
 
-const LoginFormFields = ({ isValid, isSubmitting }) => (
+const LoginFormFields = props => (
   <Form>
     <Grid
       container
@@ -37,15 +37,7 @@ const LoginFormFields = ({ isValid, isSubmitting }) => (
       <PasswordEntry name="password" />
     </Grid>
     <Grid container direction="column" justify="center" alignItems="stretch">
-      <Button
-        className="Rounded_Button"
-        variant="contained"
-        disabled={!isValid || isSubmitting}
-        type="submit"
-        color="primary"
-      >
-        Login
-      </Button>
+      {props.children}
     </Grid>
   </Form>
 );
@@ -67,10 +59,17 @@ const LoginForm = ({ submitForm }) => {
       onSubmit={submitForm}
     >
       {({ isValid, isSubmitting }) => (
-        <LoginFormFields
-          isValid={isValid}
-          isSubmitting={isSubmitting}
-        ></LoginFormFields>
+        <LoginFormFields isValid={isValid} isSubmitting={isSubmitting}>
+          <Button
+            className="Rounded_Button"
+            variant="contained"
+            disabled={!isValid || isSubmitting}
+            type="submit"
+            color="primary"
+          >
+            Login
+          </Button>
+        </LoginFormFields>
       )}
     </FormikBase>
   );
