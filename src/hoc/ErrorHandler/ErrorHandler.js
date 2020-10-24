@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
 import api from "../../utils/api";
 
@@ -32,7 +32,7 @@ export const withErrorHandler = WrappedComponent => () => {
           break;
         default:
           formattedMessage = `Sorry, Operation could not be completed. \n Possible reason(s): \n
-              ${error.data.error}`;
+              ${error?.data?.error}`;
           break;
       }
     }
@@ -51,9 +51,9 @@ export const withErrorHandler = WrappedComponent => () => {
     };
   }, []);
 
-  const confirmDialogHandler = () => {
+  const confirmDialogHandler = useCallback(() => {
     setErrorMessage("");
-  };
+  }, []);
 
   return (
     <Fragment>
