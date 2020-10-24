@@ -1,4 +1,4 @@
-#React-Material UI Project for expense splitter (In Progress).
+# React-Material UI Project for expense splitter (In Progress).
 
 ## Available Scripts
 
