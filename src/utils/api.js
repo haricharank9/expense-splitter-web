@@ -21,8 +21,9 @@ apiInstance.interceptors.response.use(
     return res;
   },
   error => {
+    console.log(error);
     onResponse();
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   }
 );
 export default apiInstance;

@@ -1,77 +1,69 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
 import api from "../../utils/api";
 
-class ErrorHandler extends Component {
-  state = {
-    error: null,
-    errorMessage: "",
+export const withErrorHandler = WrappedComponent => () => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const formatErrorMessage = error => {
+    let formattedMessage = "";
+    if (error?.message === "Network Error") {
+      formattedMessage =
+        "Having trouble connecting to server. Please check the internet connection and try again.";
+    } else {
+      switch (error?.response?.status) {
+        case 401:
+          formattedMessage = "Session Timeout, Please try again Logging In";
+          break;
+        case 403:
+          formattedMessage =
+            "Sorry, Operation could not be completed.\n Access denied to resource requested";
+          break;
+        case 404:
+          formattedMessage =
+            "Sorry, Operation could not be completed. Requested resource is either broken or not found";
+          break;
+        case 409:
+          formattedMessage = `Sorry, Operation could not be completed. \nRecord already exists. Procceding with this operation could cause duplicate`;
+          break;
+        case 500:
+          formattedMessage =
+            "Sorry, Operation could not be completed at this time.\n Back-end returned with an Internal Server Error.Please contact customer support";
+          break;
+        default:
+          formattedMessage = `Sorry, Operation could not be completed. \n Possible reason(s): \n
+              ${error.data.error}`;
+          break;
+      }
+    }
+    setErrorMessage(formattedMessage);
   };
 
-  componentWillMount() {
-    this.reqInterceptor = api.interceptors.request.use(req => {
-      this.setState({ error: null });
-      return req;
-    });
-    this.resInterceptor = api.interceptors.response.use(
+  useEffect(() => {
+    const resInterceptor = api.interceptors.response.use(
       res => res,
       error => {
-        this.setErrorMessage(error);
-        this.setState({ error });
+        formatErrorMessage(error);
       }
     );
-  }
+    return () => {
+      api.interceptors.response.eject(resInterceptor);
+    };
+  }, []);
 
-  setErrorMessage(error) {
-    let errorMessage = "";
-    switch (error.status) {
-      case 401:
-        errorMessage = "Session Timeout, Please try again Logging In";
-        break;
-      case 403:
-        errorMessage =
-          "Sorry, Operation could not be completed.\n Access denied to resource requested";
-        break;
-      case 404:
-        errorMessage =
-          "Sorry, Operation could not be completed. Requested resource is either broken or not found";
-        break;
-      case 409:
-        errorMessage = `Sorry, Operation could not be completed. \nRecord already exists. Procceding with this operation could cause duplicate`;
-        break;
-      case 500:
-        errorMessage =
-          "Sorry, Operation could not be completed at this time.\n Back-end returned with an Internal Server Error.Please contact customer support";
-        break;
-      default:
-        errorMessage = `Sorry, Operation could not be completed. \n Possible reason(s): \n
-              ${error.data.error}`;
-        break;
-    }
-    this.setState({ errorMessage });
-  }
-
-  componentWillUnmount() {
-    api.interceptors.request.eject(this.reqInterceptor);
-    api.interceptors.response.eject(this.resInterceptor);
-  }
-
-  errorConfirmedHandler = () => {
-    this.setState({ error: null });
+  const confirmDialogHandler = () => {
+    setErrorMessage("");
   };
-  render() {
-    return (
-      <Fragment>
-        <ConfirmDialog
-          confirmHandler={this.errorConfirmedHandler}
-          dialogOpener={this.state.error ? true : false}
-          dialogTitle={"Error!!"}
-          dialogText={this.state.errorMessage}
-        ></ConfirmDialog>
-        {this.props.children}
-      </Fragment>
-    );
-  }
-}
 
-export default ErrorHandler;
+  return (
+    <Fragment>
+      <ConfirmDialog
+        confirmHandler={confirmDialogHandler}
+        dialogOpener={errorMessage ? true : false}
+        dialogTitle={"Error!!"}
+        dialogText={errorMessage}
+      ></ConfirmDialog>
+      <WrappedComponent />
+    </Fragment>
+  );
+};

@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router";
 import Auth from "../../containers/Auth/Auth";
 import Home from "../../containers/Home/Home";
+import { withErrorHandler } from "../../hoc/ErrorHandler/ErrorHandler";
 
 const AppRouting = props => (
   <Switch>
@@ -11,4 +12,4 @@ const AppRouting = props => (
   </Switch>
 );
 
-export default AppRouting;
+export default withErrorHandler(AppRouting);
