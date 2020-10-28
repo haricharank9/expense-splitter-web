@@ -25,7 +25,11 @@ const AuthTabs = props => {
     <Fragment>
       <Paper className={classes.root}>
         <Tabs
-          value={history.location.pathname}
+          value={
+            history.location.pathname === "/"
+              ? "/login"
+              : history.location.pathname
+          }
           indicatorColor="secondary"
           textColor="secondary"
           centered
@@ -33,18 +37,18 @@ const AuthTabs = props => {
         >
           <Tab
             label="Login"
-            value={props.match.path + "/login"}
+            value="/login"
             icon={<VpnKeyRounded />}
             component={Link}
-            to={props.match.path + "/login"}
+            to="/login"
           />
           {/* <Divider orientation="vertical" flexItem /> */}
           <Tab
             label="Sign Up"
-            value={props.match.path + "/signup"}
+            value="/signup"
             icon={<PersonAddRounded />}
             component={Link}
-            to={props.match.path + "/signup"}
+            to="/signup"
           />
         </Tabs>
       </Paper>

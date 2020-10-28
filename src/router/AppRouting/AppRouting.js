@@ -1,15 +1,17 @@
-import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import React, { useContext } from "react";
+import { Route, Switch } from "react-router";
 import Auth from "../../containers/Auth/Auth";
 import Home from "../../containers/Home/Home";
-import { withErrorHandler } from "../../hoc/ErrorHandler/ErrorHandler";
+import { AuthContext } from "../../context/AuthContextProvider";
+import { withErrorHandler } from "../../hoc/withErrorHandler";
 
-const AppRouting = props => (
-  <Switch>
-    <Route path="/home" component={Home} />
-    <Route path="/auth" component={Auth} />
-    <Redirect from="/" exact to="/home" />
-  </Switch>
-);
+const AppRouting = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+  return (
+    <Switch>
+      <Route path="/" component={isLoggedIn ? Home : Auth} />
+    </Switch>
+  );
+};
 
 export default withErrorHandler(AppRouting);

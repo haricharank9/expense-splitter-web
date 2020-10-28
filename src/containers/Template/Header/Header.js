@@ -6,9 +6,10 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
+import PropTypes from "prop-types";
 import React from "react";
 
-const Header = props => {
+const Header = ({ logoutClicked }) => {
   return (
     <div>
       <AppBar position="static">
@@ -27,7 +28,9 @@ const Header = props => {
               <Typography variant="h6">Title</Typography>
             </Box>
             <div>
-              <Button color="inherit">Login</Button>
+              <Button color="inherit" onClick={logoutClicked}>
+                Logout
+              </Button>
             </div>
           </Box>
         </Toolbar>
@@ -37,11 +40,7 @@ const Header = props => {
 };
 
 Header.propTypes = {
-  // bla: PropTypes.string,
-};
-
-Header.defaultProps = {
-  // bla: 'test',
+  logoutClicked: PropTypes.func.isRequired,
 };
 
 export default Header;

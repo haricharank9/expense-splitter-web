@@ -1,12 +1,17 @@
-import React, { Component } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import Header from "./Header/Header";
 
-export default class Template extends Component {
-  render() {
-    return (
-      <div>
-        <Header></Header>
-      </div>
-    );
-  }
-}
+export const Template = ({ onLogout }) => {
+  return (
+    <>
+      <Header logoutClicked={onLogout}></Header>
+    </>
+  );
+};
+
+Template.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+};
+
+export default Template;

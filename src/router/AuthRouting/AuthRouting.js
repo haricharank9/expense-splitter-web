@@ -10,16 +10,16 @@ const AuthRouting = props => {
   return (
     <Switch>
       <PropsRoute
-        path={props.match.path + "/signup"}
-        component={SignUpForm}
-        submitForm={submitSignupForm}
-      />
-      <PropsRoute
-        path={props.match.path + "/login"}
+        path="/login"
         component={LoginForm}
         submitForm={submitLoginForm}
       />
-      <Redirect from="/auth" exact to="/auth/login" />
+      <PropsRoute
+        path="/signup"
+        component={SignUpForm}
+        submitForm={submitSignupForm}
+      />
+      <Redirect from="/" exact to="/login" />
     </Switch>
   );
 };

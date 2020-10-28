@@ -3,12 +3,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AppLogo from "../../components/AppLogo/AppLogo";
 import AuthTabs from "../../components/AuthTabs/AuthTabs";
+import { AuthContext } from "../../context/AuthContextProvider";
 import AuthRouting from "../../router/AuthRouting/AuthRouting";
 import { loginUser } from "../../store/actions/index";
 import api from "../../utils/api";
 import classes from "./Auth.module.scss";
 
 class Auth extends Component {
+  static contextType = AuthContext;
   postSignUpUser = (values, { resetForm }) => {
     api
       .post("/auth/signup", values)
@@ -27,9 +29,8 @@ class Auth extends Component {
   };
 
   loginUser = authToken => {
-    localStorage.setItem("authToken", authToken);
-    this.props.loginUser(authToken);
-    this.props.history.push("/home");
+    this.context.setIsLoggedIn(authToken);
+    this.props.history.push("/");
   };
 
   render() {

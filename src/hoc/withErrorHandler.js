@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
-import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
-import api from "../../utils/api";
+import ConfirmDialog from "../components/ConfirmDialog/ConfirmDialog";
+import api from "../utils/api";
 
 export const withErrorHandler = WrappedComponent => () => {
   const [errorMessage, setErrorMessage] = useState("");
